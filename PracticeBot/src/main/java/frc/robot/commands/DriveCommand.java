@@ -15,12 +15,11 @@ public class DriveCommand extends Command{
         super.initialize();
     }
 
-    int count=0;
-
     @Override
     protected void execute() {
         super.execute();
-        Robot.driveTrain.runMotor(Math.cos(count++/100.0));
+        Robot.driveTrain.runMotor(0.2); 
+        Robot.driveTrain.runMotor2(0.6);
     }
 
     @Override
