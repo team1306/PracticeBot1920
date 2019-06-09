@@ -14,6 +14,8 @@ public final class RobotMap {
 
     // #region Intake
     public static final int INTAKE_MOTOR = 4;
+    public static final int INTAKE_ARM_MOTOR = 6;
+    public static final int INTAKE_LIMIT_SWITCH = 5;
     // #endregion
 
     // #region Output
