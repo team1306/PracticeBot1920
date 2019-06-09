@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.OI;
 import frc.robot.Robot;
 
 public class DriveCommand extends Command{
@@ -18,8 +19,9 @@ public class DriveCommand extends Command{
     @Override
     protected void execute() {
         super.execute();
-        Robot.driveTrain.runMotor(0.2); 
-        Robot.driveTrain.runMotor2(0.6);
+        double driveSpeed=OI.getDriveSpeed();
+        double driveTurn=OI.getDriveTurn();
+        Robot.driveTrain.arcadeDrive(driveSpeed,driveTurn);
     }
 
     @Override
