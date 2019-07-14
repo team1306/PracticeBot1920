@@ -56,6 +56,21 @@ public class OI {
     }
 
     public static boolean isIntaking() {
-        return false;
+        try {
+            return xbox.getRawButton(LBUMPER);
+        } catch (NullPointerException e) {
+            System.err.printf("Error: OI.%s called before OI.Initialize. Please initilaize OI.", "isIntaking()");
+            e.printStackTrace();
+            return false;
+        }
     }
+
+    public static boolean isShooting() {
+        try {
+            return xbox.getRawButton(RBUMPER);
+        } catch (NullPointerException e) {
+            System.err.printf("Error: OI.%s called before OI.Initialize. Please initilaize OI.", "isShooting()");
+            e.printStackTrace();
+            return false;
+        }    }
 }

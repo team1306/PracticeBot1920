@@ -14,7 +14,7 @@ public class ShooterCommand extends Command {
     @Override
     protected void execute() {
         super.execute();
-        if(OI.isIntaking()){
+        if(OI.isShooting()){
         Robot.shooter.setShooterSpeed(1);
         }
         else {Robot.shooter.setShooterSpeed(0);}

@@ -14,8 +14,13 @@ public class IntakeCommand extends Command {
     @Override
     protected void execute() {
         super.execute();
-        if(OI.isIntaking()){
-        Robot.intake.setWheelSpeed(1);
+        if (OI.isIntaking()) {
+            Robot.intake.setWheelSpeed(1);
+        } else {
+            Robot.intake.setWheelSpeed(0);
+        }
+        if(!Robot.intake.isLimitSwitchContacting()){
+            Robot.intake.setArmSpeed(0.4);
         }
     }
 
