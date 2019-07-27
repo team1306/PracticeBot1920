@@ -16,12 +16,14 @@ public class DriveTrain extends Subsystem {
     EncoderFollower leftEncoderFollower;
     EncoderFollower rightEncoderFollower;
 
+    //TODO Get these numbers
     private static final double KP = 0;
     private static final double KI = 0;
     private static final double KD = 0;
     private static final double KV = 0;
     private static final double KA = 0;
 
+    //TODO check this
     private static final int ENCODER_TICKS_PER_REVOLUTION = 4 * 4096;
     private static final double WHEEL_DIAMETER_IN_METERS = 0.1;
 
@@ -31,11 +33,6 @@ public class DriveTrain extends Subsystem {
     private static WPI_TalonSRX frontRight;
     private static WPI_TalonSRX backRight;
 
-    /*
-     * Both a mecanum and differential drive object are created here because 1) it
-     * is not much overhead and 2) it is easier to manage the two drive types just
-     * by method calls rather than by initialization.
-     */
     private static DifferentialDrive differentialDrive;
 
     public DriveTrain() {
@@ -57,25 +54,33 @@ public class DriveTrain extends Subsystem {
     }
 
     public void startPath(Trajectory leftTrajectory, Trajectory rightTrajectory) {
+        //Clear previous data from quaderatures.
+        resetEncoderPositions();
 
+        //Initialize right side encoder resources
         rightEncoderFollower = new EncoderFollower(rightTrajectory);
         rightEncoderFollower.configurePIDVA(KP, KI, KD, KV, KA);
         rightEncoderFollower.configureEncoder(getRightEncoderPosition(), ENCODER_TICKS_PER_REVOLUTION,
                 WHEEL_DIAMETER_IN_METERS);
 
+        //Initialize left side encoder resources
         leftEncoderFollower = new EncoderFollower(leftTrajectory);
         leftEncoderFollower.configurePIDVA(KP, KI, KD, KV, KA);
         leftEncoderFollower.configureEncoder(getLeftEncoderPosition(), ENCODER_TICKS_PER_REVOLUTION,
                 WHEEL_DIAMETER_IN_METERS);
 
-        pathNotifier.startPeriodic(0);
+        //TODO check period against path parameters
+        pathNotifier.startPeriodic(0.02);
     }
 
     private void continuePath() {
         if (isFollowingPath()) {
+
             double leftSpeed = leftEncoderFollower.calculate(getLeftEncoderPosition());
             double rightSpeed = leftEncoderFollower.calculate(getRightEncoderPosition());
+
             //See https://wpilib.screenstepslive.com/s/currentCS/m/84338/l/1021631-integrating-path-following-into-a-robot-program for gyro implementation
+            
             frontLeft.set(leftSpeed);
             frontRight.set(rightSpeed);
         } else {
@@ -83,8 +88,20 @@ public class DriveTrain extends Subsystem {
         }
     }
 
+    /**
+     * Cancels or terminates path following and resets encoder positions.
+     */
     public void stopPath() {
         pathNotifier.stop();
+        resetEncoderPositions();
+    }
+
+    /**
+     * Sets all quaderature positions to 0.
+     */
+    private void resetEncoderPositions(){
+        frontLeft.getSensorCollection().setQuadraturePosition(0,0);
+        frontRight.getSensorCollection().setQuadraturePosition(0,0);
     }
 
     private int getLeftEncoderPosition() {

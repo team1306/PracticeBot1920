@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.subsystems.Shooter;
 
 public class ShooterCommand extends Command {
 
@@ -15,9 +16,9 @@ public class ShooterCommand extends Command {
     protected void execute() {
         super.execute();
         if(OI.isShooting()){
-        Robot.shooter.setShooterSpeed(1);
+        Robot.shooter.setShooterSpeed(Shooter.FULL_OUT);
         }
-        else {Robot.shooter.setShooterSpeed(0);}
+        else {Robot.shooter.setShooterSpeed(Shooter.STOP);}
     }
 
     @Override

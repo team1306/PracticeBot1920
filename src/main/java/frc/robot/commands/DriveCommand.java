@@ -12,11 +12,6 @@ public class DriveCommand extends Command{
     }
 
     @Override
-    protected void initialize() {
-        super.initialize();
-    }
-
-    @Override
     protected void execute() {
         super.execute();
         double driveSpeed=OI.getDriveSpeed();

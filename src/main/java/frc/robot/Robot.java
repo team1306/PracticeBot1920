@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import frc.robot.commands.PathCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -33,7 +34,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     driveTrain = new DriveTrain();
-    intake=new Intake();
+    intake = new Intake();
     shooter = new Shooter();
   }
 
@@ -72,5 +73,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    Scheduler.getInstance().run();
   }
 }

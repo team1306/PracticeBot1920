@@ -5,20 +5,17 @@ package frc.robot;
  */
 public final class RobotMap {
 
-    // #region Drive Train
+    //  Drive Train
     public static final int FRONT_LEFT_MOTOR = 0;
     public static final int FRONT_RIGHT_MOTOR = 1;
     public static final int BACK_LEFT_MOTOR = 2;
     public static final int BACK_RIGHT_MOTOR = 3;
-    // #endregion
 
-    // #region Intake
+    //  Intake
     public static final int INTAKE_MOTOR = 4;
     public static final int INTAKE_ARM_MOTOR = 6;
     public static final int INTAKE_LIMIT_SWITCH = 5;
-    // #endregion
 
-    // #region Output
+    //  Output
     public static final int OUTPUT_MOTOR = 5;
-    // #endregion
 }

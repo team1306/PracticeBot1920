@@ -14,7 +14,7 @@ public class Shooter extends Subsystem {
     WPI_VictorSPX shooterMotor;
 
     public Shooter() {
-        shooterMotor=new WPI_VictorSPX(RobotMap.INTAKE_MOTOR);
+        shooterMotor=new WPI_VictorSPX(RobotMap.OUTPUT_MOTOR);
     }
 
     @Override

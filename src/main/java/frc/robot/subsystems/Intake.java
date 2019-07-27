@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -25,20 +27,17 @@ public class Intake extends Subsystem {
         super();
         motor = new WPI_VictorSPX(RobotMap.INTAKE_MOTOR);
         armMotor = new WPI_VictorSPX(RobotMap.INTAKE_ARM_MOTOR);
-        limitSwitch = new DigitalInput(RobotMap.BACK_LEFT_MOTOR);
+        limitSwitch = new DigitalInput(RobotMap.INTAKE_LIMIT_SWITCH);
     }
 
     public void setWheelSpeed(double speed) {
         motor.set(speed);
+        //TODO verify this works or be careful testing
+        motor.configForwardLimitSwitchSource(LimitSwitchSource.valueOf(limitSwitch.getName()), LimitSwitchNormal.NormallyOpen);
     }
 
     public void setArmSpeed(double speed) {
-        if (isLimitSwitchContacting()) {
-            armMotor.set(0);
-            armMotor.setSelectedSensorPosition(0);// TODO check if this is actually the encoder reset method
-            return;
-        }
-        armMotor.set(speed);
+       armMotor.set(speed);
     }
 
     public boolean isLimitSwitchContacting() {
