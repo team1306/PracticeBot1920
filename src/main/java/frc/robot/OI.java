@@ -31,7 +31,6 @@ public class OI {
     private static int intakeButton = LBUMPER;
     private static int shootButton = RBUMPER;
 
-
     static Joystick xbox;
 
     /**

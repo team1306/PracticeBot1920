@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.OI;
 import frc.robot.Robot;
 
-public class DriveCommand extends Command{
+public class DriveCommand extends Command {
 
-    public DriveCommand(){
+    public DriveCommand() {
         super();
         this.requires(Robot.driveTrain);
     }
@@ -14,9 +14,9 @@ public class DriveCommand extends Command{
     @Override
     protected void execute() {
         super.execute();
-        double driveSpeed=OI.getDriveSpeed();
-        double driveTurn=OI.getDriveTurn();
-        Robot.driveTrain.arcadeDrive(driveSpeed,driveTurn);
+        double driveSpeed = OI.getDriveSpeed();
+        double driveTurn = OI.getDriveTurn();
+        Robot.driveTrain.arcadeDrive(driveSpeed, driveTurn);
     }
 
     @Override

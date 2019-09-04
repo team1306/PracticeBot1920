@@ -21,12 +21,12 @@ public class IntakeCommand extends Command {
             Robot.intake.setWheelSpeed(Intake.STOP);
         }
         /*
-         * Currently deploys arm to always lower. 
-         * TODO: Issue with this design occurs if the limit switch is broken.
-         * May want to supliment with a timer or manual control.
+         * Currently deploys arm to always lower. TODO: Issue with this design occurs if
+         * the limit switch is broken. May want to supliment with a timer or manual
+         * control.
          */
         if (!Robot.intake.isLimitSwitchContacting()) {
-            Robot.intake.setArmSpeed(0.4);//TODO magic number
+            Robot.intake.setArmSpeed(0.4);// TODO magic number
         }
     }
 

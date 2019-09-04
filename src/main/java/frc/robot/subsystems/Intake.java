@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 import frc.robot.commands.IntakeCommand;
@@ -18,26 +19,27 @@ public class Intake extends Subsystem {
     public static final double STOP = 0;
     public static final double FULL_OUT = -1;
 
-    WPI_VictorSPX motor;
+    Spark motor;
     WPI_VictorSPX armMotor;
 
     DigitalInput limitSwitch;
 
     public Intake() {
         super();
-        motor = new WPI_VictorSPX(RobotMap.INTAKE_MOTOR);
-        armMotor = new WPI_VictorSPX(RobotMap.INTAKE_ARM_MOTOR);
+        motor = new Spark(RobotMap.INTAKE_MOTOR_SPARK);
+        armMotor = new WPI_VictorSPX(RobotMap.INTAKE_ARM_MOTOR_CAN);
         limitSwitch = new DigitalInput(RobotMap.INTAKE_LIMIT_SWITCH);
+        // TODO verify this works or be careful testing
+        armMotor.configForwardLimitSwitchSource(LimitSwitchSource.valueOf(limitSwitch.getName()),
+                LimitSwitchNormal.NormallyOpen);
     }
 
     public void setWheelSpeed(double speed) {
         motor.set(speed);
-        //TODO verify this works or be careful testing
-        motor.configForwardLimitSwitchSource(LimitSwitchSource.valueOf(limitSwitch.getName()), LimitSwitchNormal.NormallyOpen);
     }
 
     public void setArmSpeed(double speed) {
-       armMotor.set(speed);
+        armMotor.set(speed);
     }
 
     public boolean isLimitSwitchContacting() {

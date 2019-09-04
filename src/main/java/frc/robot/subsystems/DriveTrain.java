@@ -16,14 +16,14 @@ public class DriveTrain extends Subsystem {
     EncoderFollower leftEncoderFollower;
     EncoderFollower rightEncoderFollower;
 
-    //TODO Get these numbers
+    // TODO Get these numbers
     private static final double KP = 0;
     private static final double KI = 0;
     private static final double KD = 0;
     private static final double KV = 0;
     private static final double KA = 0;
 
-    //TODO check this
+    // TODO check this
     private static final int ENCODER_TICKS_PER_REVOLUTION = 4 * 4096;
     private static final double WHEEL_DIAMETER_IN_METERS = 0.1;
 
@@ -36,12 +36,12 @@ public class DriveTrain extends Subsystem {
     private static DifferentialDrive differentialDrive;
 
     public DriveTrain() {
-        frontLeft = new WPI_TalonSRX(RobotMap.FRONT_LEFT_MOTOR);
-        backLeft = new WPI_TalonSRX(RobotMap.BACK_LEFT_MOTOR);
+        frontLeft = new WPI_TalonSRX(RobotMap.FRONT_LEFT_MOTOR_CAN);
+        backLeft = new WPI_TalonSRX(RobotMap.BACK_LEFT_MOTOR_CAN);
         backLeft.follow(frontLeft);
 
-        frontRight = new WPI_TalonSRX(RobotMap.FRONT_RIGHT_MOTOR);
-        backRight = new WPI_TalonSRX(RobotMap.BACK_RIGHT_MOTOR);
+        frontRight = new WPI_TalonSRX(RobotMap.FRONT_RIGHT_MOTOR_CAN);
+        backRight = new WPI_TalonSRX(RobotMap.BACK_RIGHT_MOTOR_CAN);
         backRight.follow(frontRight);
 
         differentialDrive = new DifferentialDrive(frontLeft, frontRight);
@@ -54,22 +54,22 @@ public class DriveTrain extends Subsystem {
     }
 
     public void startPath(Trajectory leftTrajectory, Trajectory rightTrajectory) {
-        //Clear previous data from quaderatures.
+        // Clear previous data from quaderatures.
         resetEncoderPositions();
 
-        //Initialize right side encoder resources
+        // Initialize right side encoder resources
         rightEncoderFollower = new EncoderFollower(rightTrajectory);
         rightEncoderFollower.configurePIDVA(KP, KI, KD, KV, KA);
         rightEncoderFollower.configureEncoder(getRightEncoderPosition(), ENCODER_TICKS_PER_REVOLUTION,
                 WHEEL_DIAMETER_IN_METERS);
 
-        //Initialize left side encoder resources
+        // Initialize left side encoder resources
         leftEncoderFollower = new EncoderFollower(leftTrajectory);
         leftEncoderFollower.configurePIDVA(KP, KI, KD, KV, KA);
         leftEncoderFollower.configureEncoder(getLeftEncoderPosition(), ENCODER_TICKS_PER_REVOLUTION,
                 WHEEL_DIAMETER_IN_METERS);
 
-        //TODO check period against path parameters
+        // TODO check period against path parameters
         pathNotifier.startPeriodic(0.02);
     }
 
@@ -79,8 +79,10 @@ public class DriveTrain extends Subsystem {
             double leftSpeed = leftEncoderFollower.calculate(getLeftEncoderPosition());
             double rightSpeed = leftEncoderFollower.calculate(getRightEncoderPosition());
 
-            //See https://wpilib.screenstepslive.com/s/currentCS/m/84338/l/1021631-integrating-path-following-into-a-robot-program for gyro implementation
-            
+            // See
+            // https://wpilib.screenstepslive.com/s/currentCS/m/84338/l/1021631-integrating-path-following-into-a-robot-program
+            // for gyro implementation
+
             frontLeft.set(leftSpeed);
             frontRight.set(rightSpeed);
         } else {
@@ -99,9 +101,9 @@ public class DriveTrain extends Subsystem {
     /**
      * Sets all quaderature positions to 0.
      */
-    private void resetEncoderPositions(){
-        frontLeft.getSensorCollection().setQuadraturePosition(0,0);
-        frontRight.getSensorCollection().setQuadraturePosition(0,0);
+    private void resetEncoderPositions() {
+        frontLeft.getSensorCollection().setQuadraturePosition(0, 0);
+        frontRight.getSensorCollection().setQuadraturePosition(0, 0);
     }
 
     private int getLeftEncoderPosition() {
